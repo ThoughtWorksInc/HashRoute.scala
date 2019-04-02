@@ -4,6 +4,7 @@ import com.thoughtworks.binding.Binding.{SingleMountPoint, Var}
 import org.scalajs.dom.{window, _}
 
 import scala.scalajs.js
+import scala.scalajs.js.URIUtils.decodeURIComponent
 import scala.util.control.NonFatal
 
 /**
@@ -13,18 +14,25 @@ class HashRoute[PageState](val state: Var[PageState],
                            parse: String => PageState,
                            format: PageState => String,
                            window: Window = window)
-    extends SingleMountPoint(state) {
+    extends SingleMountPoint[PageState](state) {
 
-  override protected def set(value: PageState): Unit = {
+  protected def set(value: PageState): Unit = {
     window.location.hash = format(value)
   }
 
   private def updateState(): Unit = {
-    try {
-      parse(window.location.hash)
+    val hashText = decodeURIComponent(window.location.hash match {
+      case hashText if hashText.startsWith("#") =>
+        hashText.substring(1)
+      case hashText =>
+        hashText
+    })
+    state.value = try {
+      parse(hashText)
     } catch {
       case NonFatal(e) =>
         e.printStackTrace()
+        return
     }
   }
 
