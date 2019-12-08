@@ -12,6 +12,6 @@ addSbtPlugin("com.thoughtworks.example" % "sbt-example" % "7.0.0")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.31")
 
-addSbtPlugin("com.thoughtworks.sbt-scala-js-map" % "sbt-scala-js-map" % "3.0.0-66-be21628f")
+addSbtPlugin("com.thoughtworks.sbt-scala-js-map" % "sbt-scala-js-map" % "4.0.0")
 
 addSbtPlugin("com.dwijnand" % "sbt-dynver" % "3.3.0+7-d5e88cd5")
